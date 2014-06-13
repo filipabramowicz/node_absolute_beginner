@@ -1,3 +1,6 @@
+// Require new parser.js file
+var Parser = require('./parser');
+
 // Load the filesystem (fs) module
 var fs = require('fs');
 
@@ -10,21 +13,9 @@ fs.readFile('example_log.txt', function(err,logData){
 	// logData is a Buffer, convert to string
 	var text = logData.toString();
 
-	var results = {};
+	// Create an instance of the Parser object
+	var parser = new Parser();
 
-	// Break up the file into lines
-	var lines = text.split('\n');
-
-	lines.forEach(function(line){
-		var parts = line.split(' ');
-		var letter = parts[1];
-		var count = parseInt(parts[2]);
-
-		if (!results[letter]) {
-			results[letter] = 0;
-		}
-
-		results[letter] += parseInt(count);
-	});
-	console.log(results);
+	// Call the parse function
+	console.log(parser.parse(text));
 });
